@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>JAMY seal</title>
+  <circle cx="32" cy="32" r="29.5" fill="#FFFFFF"/>
+  <circle cx="32" cy="32" r="28" fill="none" stroke="#0F2A4A" stroke-width="3"/>
+  <circle cx="32" cy="32" r="22" fill="none" stroke="#0F2A4A" stroke-width="1.5"/>
+  <path fill="#0F2A4A" d="M24.25 23H28.25V35.2C28.25 38.9 26.25 41.3 22.65 41.3C19.85 41.3 18.05 39.9 17.25 37.6L20.95 36.1C21.35 37.1 21.85 37.6 22.65 37.6C23.75 37.6 24.25 36.8 24.25 35.1Z M31.25 41V23H35.65L39 31.5L42.35 23H46.75V41H42.75V30.2L40.55 36.5H37.45L35.25 30.2V41Z"/>
+</svg>
