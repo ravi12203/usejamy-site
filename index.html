@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>JAMY: proof for every COBOL change</title>
-<meta name="description" content="JAMY runs the old and new version of a COBOL program on the same data, compares every byte, and gives the approver plain proof of what changed. Offline, no AI.">
+<title>JAMY: understand, change and clean up COBOL, without AI</title>
+<meta name="description" content="JAMY helps bank teams understand, change and clean up their COBOL without AI: it explains every program, proves what every change did, and finds dead code. Offline, on a Windows PC.">
 <link rel="icon" href="img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,7 +67,7 @@ footer { padding: 32px 0 48px; color: var(--body); font-size: 15px; }
   <div class="wrap">
     <div class="bar"><img src="img/jamy-seal.svg" alt="JAMY logo"><span class="name">JAMY</span></div>
     <div class="hero">
-      <h1>Proof for every COBOL change.</h1>
+      <h1>Understand, change and clean up COBOL. Without AI.</h1>
       <p>JAMY helps bank teams understand, change and clean up their COBOL, and shows the person who approves a change exactly what it did, and what it didn’t. It runs on a Windows PC, offline, with no AI.</p>
     </div>
   </div>
@@ -85,7 +85,24 @@ footer { padding: 32px 0 48px; color: var(--body); font-size: 15px; }
 
 <section class="alt">
   <div class="wrap">
-    <h2>How JAMY checks a change</h2>
+    <h2>One tool for the whole job: understand, change, clean up</h2>
+    <div class="split">
+      <div class="parts">
+        <p><b>Understand.</b> A flow chart of the program, showing how often each part ran. Maps how programs, jobs and files connect.</p>
+        <p><b>Run.</b> Runs a program or a batch job on the PC. No mainframe needed.</p>
+        <p><b>Check a change.</b> Old and new compared byte by byte, then a second person approves.</p>
+        <p><b>Clean up.</b> Finds dead code and tidies programs, across a whole set at once.</p>
+      </div>
+      <figure>
+        <img src="img/shot-understand.png" alt="JAMY Understand screen: a flow chart of a program’s paragraphs with how many times each ran" width="1384" height="960">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>How JAMY proves a change</h2>
     <div class="split">
       <ol class="steps">
         <li>Give it the old program, the new one and some test files.</li>
@@ -96,23 +113,6 @@ footer { padding: 32px 0 48px; color: var(--body); font-size: 15px; }
       <figure>
         <img src="img/shot-check.png" alt="JAMY check screen: one paragraph is green, marked changed and checked, and the request is locked before anything ran" width="1110" height="537">
         <figcaption>A real check: one paragraph changed, and JAMY confirms it was the only one.</figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <h2>It also explains and cleans up the code</h2>
-    <div class="split">
-      <div class="parts">
-        <p><b>Understand.</b> A flow chart of the program, showing how often each part ran. Maps how programs, jobs and files connect.</p>
-        <p><b>Run.</b> Runs a program or a batch job on the PC. No mainframe needed.</p>
-        <p><b>Check a change.</b> Old and new compared byte by byte, then a second person approves.</p>
-        <p><b>Clean up.</b> Finds dead code and tidies programs, across a whole set at once.</p>
-      </div>
-      <figure>
-        <img src="img/shot-understand.png" alt="JAMY Understand screen: a flow chart of a program’s paragraphs with how many times each ran" width="1384" height="960">
       </figure>
     </div>
   </div>
