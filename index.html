@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JAMY: understand, change and clean up COBOL, without AI</title>
-<meta name="description" content="JAMY helps bank teams understand, change and clean up their COBOL without AI: it explains every program, proves what every change did, and finds dead code. Offline, on a Windows PC.">
+<meta name="description" content="JAMY helps teams understand, change and clean up their COBOL without AI: it explains every program, proves what every change did, and finds dead code. Offline, on a Windows PC.">
 <meta property="og:title" content="JAMY: understand, change and clean up COBOL, without AI">
 <meta property="og:description" content="Built to extend the life of your COBOL, not to replace it. Offline, on a Windows PC.">
 <meta property="og:url" content="https://usejamy.com/">
@@ -201,7 +201,7 @@ section.dark .lede { color: var(--mist); }
 .safe p { margin: 0; color: var(--mist); font-size: 16.5px; }
 
 /* who */
-.who { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.who { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
 .who .card { background: var(--white); border-radius: 12px; padding: 28px; border: 1px solid var(--line); }
 .who .badge { width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center; background: #E4ECF5; color: var(--navy); margin-bottom: 16px; }
 .who p { color: var(--body); margin: 0; }
@@ -258,8 +258,9 @@ footer p { margin: 0; flex-basis: 100%; }
   .band .in { grid-template-columns: 1fr 1fr; }
   .band .it:nth-child(2) { border-right: 0; }
   .band .it:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-  .steps, .verdicts, .safe, .who, .start { grid-template-columns: 1fr; }
+  .steps, .verdicts, .safe, .start { grid-template-columns: 1fr; }
   .covers { grid-template-columns: 1fr 1fr; }
+  .who { grid-template-columns: 1fr 1fr; }
   .diagram { display: none; }
   .nav .links { display: none; }
   .nav .btn { margin-left: auto; }
@@ -275,7 +276,7 @@ footer p { margin: 0; flex-basis: 100%; }
 }
 @media (max-width: 560px) {
   .band .in { grid-template-columns: 1fr; }
-  .covers { grid-template-columns: 1fr; }
+  .covers, .who { grid-template-columns: 1fr; }
   .band .it { border-right: 0; border-bottom: 1px solid var(--line); }
   .band .it:last-child { border-bottom: 0; }
   .listing pre { font-size: 12.5px; }
@@ -422,7 +423,7 @@ footer p { margin: 0; flex-basis: 100%; }
     <p class="lede">The code still works. What’s running out is the confidence to touch it.</p>
     <div class="problems">
       <div class="prob"><span class="badge"><svg class="ic"><use href="#i-q"/></svg></span><div><h3>Nobody fully understands it any more</h3><p>The people who wrote it are retiring, and new people can’t see what a program really does.</p></div></div>
-      <div class="prob"><span class="badge"><svg class="ic"><use href="#i-ticket"/></svg></span><div><h3>Changes get approved on trust</h3><p>The approver sees a ticket, not proof. One wrong line can post money to the wrong account.</p></div></div>
+      <div class="prob"><span class="badge"><svg class="ic"><use href="#i-ticket"/></svg></span><div><h3>Changes get approved on trust</h3><p>The approver sees a ticket, not proof. One wrong line can send the wrong bill, payment or order.</p></div></div>
       <div class="prob"><span class="badge"><svg class="ic"><use href="#i-pile"/></svg></span><div><h3>Old code piles up</h3><p>Dead code and decades of patches make every change slower and riskier, so nobody dares to tidy it.</p></div></div>
       <div class="prob"><span class="badge"><svg class="ic"><use href="#i-dice"/></svg></span><div><h3>AI tools only guess</h3><p>Most send your code to the cloud, and they can give a different answer each time. An approver can’t sign off on a guess.</p></div></div>
     </div>
@@ -509,7 +510,7 @@ footer p { margin: 0; flex-basis: 100%; }
     <h2>What JAMY covers today</h2>
     <p class="lede">Built for batch COBOL: the programs and jobs that do the nightly work.</p>
     <div class="covers">
-      <div class="card"><span class="yes"></span><h3>Batch programs</h3><p>The programs behind accounts, loans, claims and statements.</p></div>
+      <div class="card"><span class="yes"></span><h3>Batch programs</h3><p>The programs behind billing, payroll, accounts, claims and orders.</p></div>
       <div class="card"><span class="yes"></span><h3>Your file types</h3><p>Sequential, print and indexed (VSAM KSDS) files.</p></div>
       <div class="card"><span class="yes"></span><h3>Db2 and CICS</h3><p>The common commands, through a small stand-in on the PC.</p></div>
       <div class="card"><span class="yes"></span><h3>Whole folders</h3><p>Programs, jobs and the files between them, mapped together.</p></div>
@@ -519,8 +520,8 @@ footer p { margin: 0; flex-basis: 100%; }
 
 <section class="dark" id="safe">
   <div class="wrap">
-    <h2>Built for a bank’s security review</h2>
-    <p class="lede">Your code and data stay on one PC inside your building.</p>
+    <h2>Built to pass a strict security review</h2>
+    <p class="lede">Banks, insurers and agencies all ask the same questions. Your code and data stay on one PC inside your building.</p>
     <div class="safe">
       <div class="card"><span class="badge"><svg class="ic"><use href="#i-offline"/></svg></span><b>No network code</b><p>Nothing is sent anywhere. No cloud, no telemetry, no automatic updates.</p></div>
       <div class="card"><span class="badge"><svg class="ic"><use href="#i-noai"/></svg></span><b>No AI</b><p>The same change, with the same settings, gives the same answer every time. An auditor can rerun it.</p></div>
@@ -535,11 +536,12 @@ footer p { margin: 0; flex-basis: 100%; }
 <section>
   <div class="wrap">
     <h2>Who uses it</h2>
-    <p class="lede">JAMY is for the people who keep COBOL running.</p>
+    <p class="lede">Anyone who keeps COBOL running, in any industry.</p>
     <div class="who">
-      <div class="card"><span class="badge"><svg class="ic"><use href="#i-bank"/></svg></span><h3>Banks and insurers</h3><p>Teams that run their own COBOL and have to show an auditor what every change did.</p></div>
-      <div class="card"><span class="badge"><svg class="ic"><use href="#i-tool"/></svg></span><h3>COBOL service firms</h3><p>Consultants who walk into code they didn’t write and have to change it for a client.</p></div>
+      <div class="card"><span class="badge"><svg class="ic"><use href="#i-bank"/></svg></span><h3>Banks and insurers</h3><p>Teams that have to show an auditor what every change did.</p></div>
       <div class="card"><span class="badge"><svg class="ic"><use href="#i-gov"/></svg></span><h3>Government agencies</h3><p>Benefit, tax and licensing systems with few experts left and no budget for a rewrite.</p></div>
+      <div class="card"><span class="badge"><svg class="ic"><use href="#i-pile"/></svg></span><h3>Retail, airlines, healthcare, manufacturing</h3><p>Any company whose orders, bookings, billing or payroll still run on COBOL.</p></div>
+      <div class="card"><span class="badge"><svg class="ic"><use href="#i-tool"/></svg></span><h3>COBOL service firms</h3><p>Consultants who walk into code they didn’t write and have to change it for a client.</p></div>
     </div>
   </div>
 </section>
