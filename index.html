@@ -5,141 +5,394 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JAMY: understand, change and clean up COBOL, without AI</title>
 <meta name="description" content="JAMY helps bank teams understand, change and clean up their COBOL without AI: it explains every program, proves what every change did, and finds dead code. Offline, on a Windows PC.">
+<meta property="og:title" content="JAMY: understand, change and clean up COBOL, without AI">
+<meta property="og:description" content="Built to extend the life of your COBOL, not to replace it. Offline, on a Windows PC.">
+<meta property="og:url" content="https://usejamy.com/">
+<meta property="og:image" content="https://usejamy.com/img/shot-understand.png">
 <link rel="icon" href="img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <style>
 :root {
   --navy: #0F2A4A;
-  --paper: #F6F5F0;
-  --paper2: #ECEAE3;
   --ink: #14213D;
-  --body: #3E4A5C;
+  --body: #3D4A5C;
+  --paper: #F4F6F5;
+  --white: #FCFDFC;
+  --bar: #E2EEE4;
+  --line: #D2D9D6;
   --teal: #1F6F6B;
-  --mist: #C3D1E0;
-  --line: #D5D2C8;
-  --amber: #E8B04B;
+  --mist: #C5D3E2;
+  --ok: #1B7F3B;
+  --ok-bg: #DFF1E3;
+  --read: #1D5FA8;
+  --read-bg: #DFEAF7;
+  --warn: #9A6200;
+  --warn-bg: #FBEFD3;
+  --del: #A33A2B;
 }
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; font-family: 'Public Sans', Arial, sans-serif; color: var(--ink); background: var(--paper); font-size: 18px; line-height: 1.6; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { margin: 0; font-family: 'IBM Plex Sans', Arial, sans-serif; color: var(--ink); background: var(--paper); font-size: 18px; line-height: 1.6; }
+img { max-width: 100%; height: auto; display: block; }
 a { color: var(--teal); }
-.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
-header { background: var(--navy); color: var(--paper); }
-.bar { display: flex; align-items: center; gap: 14px; padding: 20px 0; }
-.bar img { width: 40px; height: 40px; }
-.bar .name { font-weight: 700; font-size: 22px; letter-spacing: 1px; }
-.hero { padding: 56px 0 72px; }
-.hero h1 { font-size: clamp(36px, 6vw, 60px); line-height: 1.08; margin: 0 0 20px; color: var(--paper); }
-.hero p { font-size: clamp(18px, 2.2vw, 22px); color: var(--mist); max-width: 720px; margin: 0; }
-section { padding: 64px 0; }
-section.alt { background: var(--paper2); }
-h2 { font-size: clamp(26px, 3.6vw, 36px); line-height: 1.2; margin: 0 0 24px; }
-.point { border-left: 5px solid var(--teal); padding: 2px 0 2px 20px; margin: 0 0 22px; color: var(--body); max-width: 820px; }
-.point b { color: var(--ink); }
-.split { display: grid; grid-template-columns: 1fr 1.4fr; gap: 40px; align-items: start; }
-ol.steps { margin: 0; padding-left: 24px; color: var(--body); }
-ol.steps li { margin: 0 0 14px; }
-figure { margin: 0; }
-figure img { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 6px; background: #FDFDFC; display: block; }
-figcaption { font-size: 15px; color: var(--body); margin-top: 8px; }
-.parts p { margin: 0 0 16px; color: var(--body); }
-.parts b { color: var(--ink); }
-.facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-.fact { border-top: 4px solid var(--teal); padding-top: 16px; }
-.fact .n { font-size: 40px; font-weight: 700; line-height: 1.1; margin: 0 0 6px; }
-.fact p { margin: 0; color: var(--body); }
-.founder { background: var(--navy); color: var(--paper); }
-.founder h2 { color: var(--paper); }
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid #E8B04B; outline-offset: 2px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+h1, h2, h3 { line-height: 1.15; margin: 0; }
+h2 { font-size: clamp(28px, 3.6vw, 40px); font-weight: 700; margin-bottom: 14px; }
+h3 { font-size: 21px; font-weight: 600; margin-bottom: 6px; }
+p { margin: 0 0 14px; }
+.lede { font-size: 20px; color: var(--body); max-width: 760px; margin-bottom: 36px; }
+
+.top { background: var(--navy); color: var(--white); }
+.nav { display: flex; align-items: center; gap: 28px; padding: 18px 0; }
+.brand { display: flex; align-items: center; gap: 12px; color: var(--white); text-decoration: none; font-weight: 700; font-size: 22px; letter-spacing: 1px; }
+.brand img { width: 40px; height: 40px; }
+.nav .links { display: flex; gap: 24px; margin-left: auto; }
+.nav .links a { color: var(--mist); text-decoration: none; font-size: 16px; }
+.nav .links a:hover { color: var(--white); text-decoration: underline; }
+.btn { display: inline-block; font: inherit; font-weight: 600; font-size: 17px; text-decoration: none; border-radius: 6px; padding: 11px 22px; border: 2px solid transparent; cursor: pointer; }
+.btn.light { background: var(--white); color: var(--navy); }
+.btn.ghost { border-color: var(--mist); color: var(--white); }
+.btn.dark { background: var(--navy); color: var(--white); }
+.nav .btn { padding: 8px 16px; font-size: 16px; }
+
+.hero { display: grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: center; padding: 48px 0 76px; }
+.hero h1 { font-size: clamp(38px, 5.4vw, 62px); font-weight: 700; letter-spacing: -0.5px; margin-bottom: 20px; }
+.hero .sub { font-size: 21px; color: var(--mist); margin-bottom: 12px; }
+.hero .life { font-size: 21px; color: var(--white); font-weight: 600; margin-bottom: 30px; }
+.hero .actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+.listing { background: var(--white); color: var(--ink); border-radius: 8px; overflow: hidden; box-shadow: 0 18px 40px rgba(4, 16, 32, .45); }
+.listing .head { display: flex; justify-content: space-between; gap: 12px; padding: 10px 16px; font-size: 14px; color: var(--body); border-bottom: 1px solid var(--line); background: #EEF2F0; }
+.listing pre { margin: 0; padding: 0; font-family: 'IBM Plex Mono', Consolas, monospace; font-size: 14.5px; line-height: 26px; overflow-x: auto; background: repeating-linear-gradient(var(--white) 0 26px, var(--bar) 26px 52px); }
+.listing pre .ln { display: block; padding: 0 16px; white-space: pre; }
+.listing .seq { color: #7C8A86; }
+.listing .old { color: var(--del); }
+.listing .old .t { text-decoration: line-through; text-decoration-color: rgba(163, 58, 43, .7); }
+.listing .new { color: var(--ok); font-weight: 500; }
+.listing .result { padding: 14px 16px 16px; border-top: 1px solid var(--line); font-size: 16px; color: var(--body); }
+.chip { display: inline-block; font-weight: 600; font-size: 15px; border-radius: 4px; padding: 2px 10px; margin-right: 8px; }
+.chip.ok { color: var(--ok); background: var(--ok-bg); }
+.chip.read { color: var(--read); background: var(--read-bg); }
+.chip.warn { color: var(--warn); background: var(--warn-bg); }
+.hero .note { font-size: 14px; color: var(--mist); margin: 12px 0 0; }
+
+section { padding: 76px 0; }
+section.tint { background: #E9EEEC; }
+section.dark { background: var(--navy); color: var(--white); }
+section.dark h2 { color: var(--white); }
+
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.tabs button { font: inherit; font-weight: 600; font-size: 18px; color: var(--body); background: transparent; border: 2px solid var(--line); border-bottom: 0; border-radius: 8px 8px 0 0; padding: 12px 22px; cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--white); color: var(--navy); border-color: var(--navy); position: relative; top: 2px; }
+.panel { background: var(--white); border: 2px solid var(--navy); border-radius: 0 8px 8px 8px; padding: 28px; display: grid; grid-template-columns: 1fr 1.5fr; gap: 36px; align-items: center; margin-bottom: 20px; }
+.js .panel[hidden] { display: none; }
+.panel ul { margin: 12px 0 0; padding-left: 22px; color: var(--body); }
+.panel li { margin-bottom: 8px; }
+.shot { border: 1px solid var(--line); border-radius: 6px; background: #FDFDFC; }
+.panel figure { margin: 0; }
+.panel figcaption { font-size: 14px; color: var(--body); margin-top: 8px; }
+
+.problems { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 48px; max-width: 980px; }
+.problems p { border-left: 4px solid var(--teal); padding-left: 18px; margin: 0; color: var(--body); }
+.problems b { color: var(--ink); }
+
+.steps { list-style: none; counter-reset: s; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); }
+.steps li { counter-increment: s; position: relative; padding: 54px 24px 0 0; color: var(--body); }
+.steps li::before { content: counter(s); position: absolute; top: 0; left: 0; width: 38px; height: 38px; border-radius: 50%; background: var(--navy); color: var(--white); font-weight: 700; display: grid; place-items: center; }
+.steps li::after { content: ""; position: absolute; top: 18px; left: 46px; right: 8px; height: 2px; background: var(--line); }
+.steps li:last-child::after { display: none; }
+.steps b { display: block; color: var(--ink); font-size: 19px; margin-bottom: 4px; }
+
+.verdicts { display: grid; gap: 14px; max-width: 900px; }
+.verdicts div { display: grid; grid-template-columns: 190px 1fr; gap: 20px; align-items: baseline; background: var(--white); border: 1px solid var(--line); border-radius: 6px; padding: 16px 20px; }
+.verdicts p { margin: 0; color: var(--body); }
+
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.box { background: var(--white); border: 1px solid var(--line); border-radius: 8px; padding: 26px 28px; }
+.box ul { margin: 8px 0 0; padding-left: 22px; color: var(--body); }
+.box li { margin-bottom: 8px; }
+.box .more { margin: 14px 0 0; color: var(--body); }
+.box.yes { border-top: 5px solid var(--ok); }
+.box.no { border-top: 5px solid var(--warn); }
+.aside { margin-top: 24px; max-width: 900px; color: var(--body); }
+
+section.dark .lede { color: var(--mist); }
+.safe { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 48px; list-style: none; margin: 0; padding: 0; }
+.safe li { padding-left: 34px; position: relative; color: var(--mist); }
+.safe li::before { content: ""; position: absolute; left: 0; top: 7px; width: 18px; height: 10px; border-left: 3px solid #7FD49A; border-bottom: 3px solid #7FD49A; transform: rotate(-45deg); }
+.safe b { color: var(--white); display: block; }
+
+.who { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.who div { border-top: 4px solid var(--navy); padding-top: 16px; }
+.who p { color: var(--body); margin: 0; }
+
+.start { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--white); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.start div { padding: 26px 28px; border-right: 1px solid var(--line); }
+.start div:last-child { border-right: 0; }
+.start .when { color: var(--teal); font-weight: 600; font-size: 16px; margin-bottom: 4px; }
+.start p { color: var(--body); margin: 0; }
+.start p.when { color: var(--teal); margin-bottom: 4px; }
+
+.faq { max-width: 860px; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; font-weight: 600; font-size: 19px; padding: 16px 0; }
+.faq details p { color: var(--body); padding: 0 0 16px; margin: 0; }
+
 .founder p { color: var(--mist); max-width: 780px; }
-.founder blockquote { margin: 28px 0 0; padding-left: 24px; border-left: 5px solid var(--amber); color: var(--paper); font-size: 21px; max-width: 780px; }
-footer { padding: 32px 0 48px; color: var(--body); font-size: 15px; }
-.bar .spacer { flex: 1; }
-.bar a.cta { color: var(--navy); background: var(--paper); text-decoration: none; font-weight: 600; font-size: 16px; padding: 8px 16px; border-radius: 6px; }
+.founder blockquote { margin: 26px 0 0; padding-left: 24px; border-left: 5px solid #E8B04B; color: var(--white); font-size: 22px; max-width: 780px; }
+
 .contact form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; max-width: 820px; }
 .contact label { display: block; font-weight: 600; font-size: 15px; margin-bottom: 6px; }
-.contact input, .contact select, .contact textarea { width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: #FDFDFC; border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; }
+.contact input, .contact select, .contact textarea { width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: var(--white); border: 1px solid #AEB8B4; border-radius: 6px; padding: 10px 12px; }
 .contact textarea { min-height: 140px; resize: vertical; }
 .contact .full { grid-column: 1 / -1; }
 .contact .hp { position: absolute; left: -9999px; }
-.contact button { font: inherit; font-weight: 700; font-size: 17px; color: var(--paper); background: var(--navy); border: 0; border-radius: 6px; padding: 12px 28px; cursor: pointer; }
 .contact .small { font-size: 14px; color: var(--body); margin: 0; }
-@media (max-width: 760px) {
-  .split, .facts, .contact form { grid-template-columns: 1fr; }
-  section { padding: 44px 0; }
+
+footer { padding: 30px 0 46px; color: var(--body); font-size: 15px; border-top: 1px solid var(--line); }
+
+@media (max-width: 900px) {
+  .hero, .panel, .cols, .problems, .safe { grid-template-columns: 1fr; }
+  .hero { gap: 36px; padding-bottom: 56px; }
+  .steps { grid-template-columns: 1fr 1fr; gap: 28px 0; }
+  .steps li::after { display: none; }
+  .who, .start { grid-template-columns: 1fr; }
+  .start div { border-right: 0; border-bottom: 1px solid var(--line); }
+  .start div:last-child { border-bottom: 0; }
+  .verdicts div { grid-template-columns: 1fr; gap: 6px; }
+  .nav .links { display: none; }
+  .nav .btn { margin-left: auto; }
+  section { padding: 54px 0; }
+  .contact form { grid-template-columns: 1fr; }
+  .tabs button { font-size: 16px; padding: 10px 14px; }
+  .panel { border-radius: 0 0 8px 8px; padding: 20px; }
+}
+@media (max-width: 520px) {
+  .steps { grid-template-columns: 1fr; }
+  .listing pre { font-size: 12.5px; }
 }
 </style>
 </head>
 <body>
 
-<header>
+<header class="top">
   <div class="wrap">
-    <div class="bar"><img src="img/jamy-seal.svg" alt="JAMY logo"><span class="name">JAMY</span><span class="spacer"></span><a class="cta" href="#contact">Contact us</a></div>
+    <nav class="nav" aria-label="Main">
+      <a class="brand" href="/"><img src="img/jamy-seal.svg" alt="">JAMY</a>
+      <div class="links">
+        <a href="#what">What it does</a>
+        <a href="#how">How a check works</a>
+        <a href="#covers">What it covers</a>
+        <a href="#safe">Security</a>
+        <a href="#questions">Questions</a>
+      </div>
+      <a class="btn light" href="#contact">Contact us</a>
+    </nav>
+
     <div class="hero">
-      <h1>Understand, change and clean up COBOL. Without AI.</h1>
-      <p>JAMY helps bank teams understand, change and clean up their COBOL, and shows the person who approves a change exactly what it did, and what it didn’t. It runs on a Windows PC, offline, with no AI.</p>
+      <div>
+        <h1>Understand, change and clean up COBOL. Without AI.</h1>
+        <p class="sub">JAMY explains every program, proves what every change did, and finds the code you can safely remove. It runs offline on a Windows PC.</p>
+        <p class="life">Built to extend the life of your COBOL, not to replace it.</p>
+        <div class="actions">
+          <a class="btn light" href="#contact">Ask for a free first look</a>
+          <a class="btn ghost" href="#what">See what it does</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="listing" role="img" aria-label="An example check. In a COBOL program, a late fee cap is raised from 25.00 to 39.00. JAMY reports: Ran and checked. 15 lines differ on 3 test cases, each where the request expected it.">
+          <div class="head"><span>LOANACR.cbl</span><span>Raise the late fee cap to 39.00</span></div>
+<pre aria-hidden="true"><span class="ln"><span class="seq">021000</span>  2100-LATE-FEE.</span><span class="ln"><span class="seq">021100</span>      COMPUTE WS-FEE = WS-BALANCE * WS-FEE-RATE</span><span class="ln old"><span class="seq">021200</span>-     <span class="t">IF WS-FEE &gt; 25.00</span></span><span class="ln old"><span class="seq">021300</span>-         <span class="t">MOVE 25.00 TO WS-FEE</span></span><span class="ln new"><span class="seq">021200</span>+     IF WS-FEE &gt; 39.00</span><span class="ln new"><span class="seq">021300</span>+         MOVE 39.00 TO WS-FEE</span><span class="ln"><span class="seq">021400</span>      END-IF.</span><span class="ln"><span class="seq">021500</span>      ADD WS-FEE TO WS-TOTAL-DUE.</span></pre>
+          <div class="result"><span class="chip ok">Ran and checked</span>15 lines differ on 3 test cases, each where the request expected it.</div>
+        </div>
+        <p class="note">An example check: old and new program run on the same data, every output byte compared.</p>
+      </div>
     </div>
   </div>
 </header>
 
-<section>
+<section id="what">
   <div class="wrap">
-    <h2>Bank COBOL is hard to understand, risky to change and full of clutter</h2>
-    <p class="point"><b>Nobody fully understands it any more.</b> Accounts, loans, claims and tax run on programs written decades ago. The experts are retiring, and new people can’t see what a program really does.</p>
-    <p class="point"><b>Changes get approved on trust.</b> The approver sees a ticket, not proof. One wrong line can post money to the wrong account, and nobody notices for weeks.</p>
-    <p class="point"><b>Old code piles up.</b> Dead code and decades of patches make every change slower and riskier, so nobody dares to tidy it.</p>
-    <p class="point"><b>AI tools only guess.</b> Most send the bank’s code to the cloud, and they can give a different answer each time. An approver can’t sign off on a guess.</p>
-  </div>
-</section>
+    <h2>One tool, three jobs</h2>
+    <p class="lede">Anyone who works on COBOL they didn’t write has the same three jobs. JAMY does each of them on the PC, with nothing sent anywhere.</p>
 
-<section class="alt">
-  <div class="wrap">
-    <h2>One tool: understand, change, clean up</h2>
-    <div class="split">
-      <div class="parts">
-        <p><b>Understand.</b> A flow chart of the program, showing how often each part ran. Maps how programs, jobs and files connect.</p>
-        <p><b>Run.</b> Runs a program or a batch job on the PC. No mainframe needed.</p>
-        <p><b>Check a change.</b> Old and new compared byte by byte, then a second person approves.</p>
-        <p><b>Clean up.</b> Finds dead code and tidies programs, across a whole set at once.</p>
+    <div class="tabs" role="tablist" aria-label="What JAMY does">
+      <button role="tab" id="tab-understand" aria-controls="p-understand" aria-selected="true">Understand</button>
+      <button role="tab" id="tab-change" aria-controls="p-change" aria-selected="false" tabindex="-1">Check a change</button>
+      <button role="tab" id="tab-clean" aria-controls="p-clean" aria-selected="false" tabindex="-1">Clean up</button>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-understand" aria-labelledby="tab-understand">
+      <div>
+        <h3>See what a program really does</h3>
+        <ul>
+          <li>A flow chart of the program you can click through.</li>
+          <li>How many times each part ran on your test data, and which parts never ran.</li>
+          <li>A plain description of what the program does.</li>
+          <li>A map of the jobs and files it touches.</li>
+        </ul>
       </div>
       <figure>
-        <img src="img/shot-understand.png" alt="JAMY Understand screen: a flow chart of a program’s paragraphs with how many times each ran" width="1384" height="960">
+        <img class="shot" src="img/shot-understand.png" alt="JAMY Understand screen: a flow chart of a program’s paragraphs, each showing how many times it ran, with one marked never ran" width="1384" height="960" loading="lazy">
       </figure>
     </div>
+
+    <div class="panel" role="tabpanel" id="p-change" aria-labelledby="tab-change" hidden>
+      <div>
+        <h3>Prove what a change did</h3>
+        <ul>
+          <li>JAMY runs the old and the new program on the same test files.</li>
+          <li>It compares every byte of every output.</li>
+          <li>It says in plain words what changed and what stayed the same.</li>
+          <li>It doesn’t matter who wrote the change: a person or an AI tool.</li>
+        </ul>
+      </div>
+      <figure>
+        <img class="shot" src="img/shot-check.png" alt="JAMY check screen: one paragraph of the program is green, marked changed and checked, and the request is locked before anything ran" width="1110" height="537" loading="lazy">
+        <figcaption>One paragraph changed, and JAMY confirms it was the only one.</figcaption>
+      </figure>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-clean" aria-labelledby="tab-clean" hidden>
+      <div>
+        <h3>Find what can safely go</h3>
+        <ul>
+          <li>JAMY scans a whole folder of programs for dead code and tidy-ups.</li>
+          <li>It sorts each program: clean now, already tidy, or needs a bigger tidy-up.</li>
+          <li>Every clean-up is checked like any other change, so you know nothing else moved.</li>
+        </ul>
+      </div>
+      <figure>
+        <img class="shot" src="img/shot-cleanup.png" alt="JAMY clean-up scan of ten programs: 5 can be cleaned now, 2 are already tidy, 1 needs a bigger tidy-up, 2 are outside JAMY today" width="1212" height="378" loading="lazy">
+        <figcaption>A scan of ten programs, sorted by what can be done now.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="tint">
+  <div class="wrap">
+    <h2>Why COBOL is getting harder to live with</h2>
+    <p class="lede">The code still works. What’s running out is the confidence to touch it.</p>
+    <div class="problems">
+      <p><b>Nobody fully understands it any more.</b> The people who wrote it are retiring, and new people can’t see what a program really does.</p>
+      <p><b>Changes get approved on trust.</b> The approver sees a ticket, not proof. One wrong line can post money to the wrong account.</p>
+      <p><b>Old code piles up.</b> Dead code and decades of patches make every change slower and riskier, so nobody dares to tidy it.</p>
+      <p><b>AI tools only guess.</b> Most send your code to the cloud, and they can give a different answer each time. An approver can’t sign off on a guess.</p>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2>How a check works</h2>
+    <p class="lede">There is no guessing in it. JAMY runs the real programs and compares what comes out.</p>
+    <ol class="steps">
+      <li><b>Write down the request</b>What should change, and what must not. JAMY locks it before anything runs.</li>
+      <li><b>Run both versions</b>The old and the new program, on the same test files, on the PC.</li>
+      <li><b>Compare every byte</b>Every record of every output file, old against new.</li>
+      <li><b>A second person approves</b>They get an evidence pack, not a ticket. The person who asked can’t approve.</li>
+    </ol>
+  </div>
+</section>
+
+<section class="tint">
+  <div class="wrap">
+    <h2>It tells you when it can’t be sure</h2>
+    <p class="lede">Every check ends in one of three plain answers, with the reason.</p>
+    <div class="verdicts">
+      <div><span><span class="chip ok">Ran and checked</span></span><p>Both versions ran, and the outputs differ only where the request said they would.</p></div>
+      <div><span><span class="chip read">Read from the code</span></span><p>This part couldn’t be run, so the answer comes from reading the code. JAMY shows you the lines.</p></div>
+      <div><span><span class="chip warn">Not proven</span></span><p>JAMY couldn’t show the change is safe, and it says exactly why.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="covers">
+  <div class="wrap">
+    <h2>What JAMY covers today</h2>
+    <p class="lede">We’d rather tell you now than have you find out in a pilot.</p>
+    <div class="cols">
+      <div class="box yes">
+        <h3>It checks</h3>
+        <ul>
+          <li>Batch programs</li>
+          <li>Sequential, print and indexed (VSAM KSDS) files</li>
+          <li>The common Db2 and CICS commands, through a small stand-in</li>
+          <li>Whole folders: programs, jobs and the files between them</li>
+        </ul>
+      </div>
+      <div class="box no">
+        <h3>It doesn’t check yet</h3>
+        <ul>
+          <li>IMS</li>
+          <li>CICS and Db2 beyond that stand-in</li>
+        </ul>
+        <p class="more">JAMY still explains these programs. Changes to them are tested on your test system, as today. Anything it can’t run, it names with the line.</p>
+      </div>
+    </div>
+    <p class="aside"><b>About the compiler.</b> On the PC, JAMY runs programs with GnuCOBOL, not IBM’s compiler. For the cases that matter, it prepares a folder your team runs on your own test system, then compares that output byte for byte. Your compiler stays the last gate.</p>
+  </div>
+</section>
+
+<section class="dark" id="safe">
+  <div class="wrap">
+    <h2>Built for a bank’s security review</h2>
+    <p class="lede">Your code and data stay on one PC inside your building.</p>
+    <ul class="safe">
+      <li><b>No network code</b>Nothing is sent anywhere. No cloud, no telemetry, no automatic updates.</li>
+      <li><b>No AI</b>The same change, with the same settings, gives the same answer every time. An auditor can rerun it.</li>
+      <li><b>No account, no licence server</b>An installed copy keeps working whether or not we do.</li>
+      <li><b>Writes nothing to your systems</b>The approved program goes to your release team, as it does today.</li>
+      <li><b>Evidence that can’t be changed quietly</b>Each pack carries fingerprints of the programs and the test data.</li>
+      <li><b>Two people for every change</b>The person who asks for a change can’t be the one who approves it.</li>
+    </ul>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h2>How JAMY proves a change</h2>
-    <div class="split">
-      <ol class="steps">
-        <li>Give it the old program, the new one and some test files.</li>
-        <li>It runs both on the same data, on the PC.</li>
-        <li>It compares every byte of output and says in plain words what changed.</li>
-        <li>A second person approves, with an evidence pack nobody can quietly edit.</li>
-      </ol>
-      <figure>
-        <img src="img/shot-check.png" alt="JAMY check screen: one paragraph is green, marked changed and checked, and the request is locked before anything ran" width="1110" height="537">
-        <figcaption>A real check: one paragraph changed, and JAMY confirms it was the only one.</figcaption>
-      </figure>
+    <h2>Who uses it</h2>
+    <div class="who">
+      <div><h3>Banks and insurers</h3><p>Teams that run their own COBOL and have to show an auditor what every change did.</p></div>
+      <div><h3>COBOL service firms</h3><p>Consultants who walk into code they didn’t write and have to change it for a client.</p></div>
+      <div><h3>Government agencies</h3><p>Benefit, tax and licensing systems with few experts left and no budget for a rewrite.</p></div>
     </div>
   </div>
 </section>
 
-<section class="alt">
+<section class="tint">
   <div class="wrap">
-    <h2>Built for banks that keep their COBOL</h2>
-    <div class="facts">
-      <div class="fact"><p class="n">Offline</p><p>No network, no cloud, no account. Your code and data never leave the PC.</p></div>
-      <div class="fact"><p class="n">No AI</p><p>The same change gives the same answer every time, so an auditor can rerun it.</p></div>
-      <div class="fact"><p class="n">Two people</p><p>The person who makes a change and the person who approves it each work in their own part of JAMY.</p></div>
+    <h2>Start with one program</h2>
+    <p class="lede">Everything is done online. JAMY runs on your PC, and we guide you over a video call.</p>
+    <div class="start">
+      <div><p class="when">First</p><h3>A free first look</h3><p>One hour. JAMY explains one of your programs and checks one change your team made recently.</p></div>
+      <div><p class="when">Then</p><h3>A pilot</h3><p>Up to 60 days on one application: understand it, check a set of past changes, and scan it for clean-up.</p></div>
+      <div><p class="when">After that</p><h3>A team licence</h3><p>One team, all its users and reviewers, with updates and support.</p></div>
     </div>
   </div>
 </section>
 
-<section class="founder">
+<section id="questions">
+  <div class="wrap">
+    <h2>Questions people ask</h2>
+    <div class="faq">
+      <details><summary>Is JAMY a migration tool?</summary><p>No. JAMY doesn’t convert COBOL to another language. It’s for teams that keep their COBOL and want to understand it, change it safely and clean it up.</p></details>
+      <details><summary>Does our code leave the building?</summary><p>No. JAMY has no network code. It runs on one Windows PC, and nothing is sent anywhere.</p></details>
+      <details><summary>Does it use AI?</summary><p>No. JAMY reads the code and runs the programs. The same change gives the same answer every time.</p></details>
+      <details><summary>Can it check a change that an AI tool wrote?</summary><p>Yes. JAMY doesn’t care who wrote the change. It runs the old and the new version and shows what came out different.</p></details>
+      <details><summary>Do we need mainframe time to use it?</summary><p>Not for everyday checks. They run on the PC. When you want a mainframe match, JAMY prepares a folder your team runs on your own test system and compares the result.</p></details>
+      <details><summary>What if a small supplier like you disappears?</summary><p>Nothing in JAMY depends on us. There’s no server and no licence server, and the evidence packs are plain files that open in any browser.</p></details>
+      <details><summary>Does it replace our testing?</summary><p>No. It adds proof to it. Your experts stay in charge: they review evidence instead of reading code line by line.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="dark founder">
   <div class="wrap">
     <h2>Why it’s called JAMY</h2>
     <p>JAMY is built by Ravinder Singh, a data architect in New York (SQL Server, ETL and reporting for business systems).</p>
@@ -150,7 +403,7 @@ footer { padding: 32px 0 48px; color: var(--body); font-size: 15px; }
 <section class="contact" id="contact">
   <div class="wrap">
     <h2>Contact us</h2>
-    <p class="point">Tell us about your COBOL. The first look is free: one hour, online, on one of your own programs.</p>
+    <p class="lede">Tell us about your COBOL. The first look is free: one hour, online, on one of your own programs.</p>
     <form action="https://formsubmit.co/contact@usejamy.com" method="POST">
       <input type="hidden" name="_subject" value="New message from usejamy.com">
       <input type="hidden" name="_next" value="https://usejamy.com/thanks.html">
@@ -169,7 +422,7 @@ footer { padding: 32px 0 48px; color: var(--body); font-size: 15px; }
           <option>Something else</option>
         </select></div>
       <div class="full"><label for="f-msg">Message</label><textarea id="f-msg" name="message" required></textarea></div>
-      <div class="full"><button type="submit">Send message</button></div>
+      <div class="full"><button class="btn dark" type="submit">Send message</button></div>
       <p class="small full">Please don’t paste source code or customer data here. Or email us at <a href="mailto:contact@usejamy.com">contact@usejamy.com</a>.</p>
     </form>
   </div>
@@ -177,9 +430,31 @@ footer { padding: 32px 0 48px; color: var(--body); font-size: 15px; }
 
 <footer>
   <div class="wrap">
-    <p>JAMY is made by Integrated Tech Solutions Inc, New York, in business since 2020. Banks, insurers and COBOL service firms: write to <a href="mailto:contact@usejamy.com">contact@usejamy.com</a>.</p>
+    <p>JAMY is made by Integrated Tech Solutions Inc, New York, in business since 2020. Write to <a href="mailto:contact@usejamy.com">contact@usejamy.com</a>.</p>
   </div>
 </footer>
 
+<script>
+(function () {
+  document.documentElement.classList.add('js');
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  function show(tab) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { show(t); });
+    t.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      show(n); n.focus();
+    });
+  });
+})();
+</script>
 </body>
 </html>
