@@ -55,8 +55,18 @@ figcaption { font-size: 15px; color: var(--body); margin-top: 8px; }
 .founder p { color: var(--mist); max-width: 780px; }
 .founder blockquote { margin: 28px 0 0; padding-left: 24px; border-left: 5px solid var(--amber); color: var(--paper); font-size: 21px; max-width: 780px; }
 footer { padding: 32px 0 48px; color: var(--body); font-size: 15px; }
+.bar .spacer { flex: 1; }
+.bar a.cta { color: var(--navy); background: var(--paper); text-decoration: none; font-weight: 600; font-size: 16px; padding: 8px 16px; border-radius: 6px; }
+.contact form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; max-width: 820px; }
+.contact label { display: block; font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+.contact input, .contact select, .contact textarea { width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: #FDFDFC; border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; }
+.contact textarea { min-height: 140px; resize: vertical; }
+.contact .full { grid-column: 1 / -1; }
+.contact .hp { position: absolute; left: -9999px; }
+.contact button { font: inherit; font-weight: 700; font-size: 17px; color: var(--paper); background: var(--navy); border: 0; border-radius: 6px; padding: 12px 28px; cursor: pointer; }
+.contact .small { font-size: 14px; color: var(--body); margin: 0; }
 @media (max-width: 760px) {
-  .split, .facts { grid-template-columns: 1fr; }
+  .split, .facts, .contact form { grid-template-columns: 1fr; }
   section { padding: 44px 0; }
 }
 </style>
@@ -65,7 +75,7 @@ footer { padding: 32px 0 48px; color: var(--body); font-size: 15px; }
 
 <header>
   <div class="wrap">
-    <div class="bar"><img src="img/jamy-seal.svg" alt="JAMY logo"><span class="name">JAMY</span></div>
+    <div class="bar"><img src="img/jamy-seal.svg" alt="JAMY logo"><span class="name">JAMY</span><span class="spacer"></span><a class="cta" href="#contact">Contact us</a></div>
     <div class="hero">
       <h1>Understand, change and clean up COBOL. Without AI.</h1>
       <p>JAMY helps bank teams understand, change and clean up their COBOL, and shows the person who approves a change exactly what it did, and what it didn’t. It runs on a Windows PC, offline, with no AI.</p>
@@ -134,6 +144,34 @@ footer { padding: 32px 0 48px; color: var(--body); font-size: 15px; }
     <h2>Why it’s called JAMY</h2>
     <p>JAMY is built by Ravinder Singh, a data architect in New York (SQL Server, ETL and reporting for business systems).</p>
     <blockquote>JAMY is named after my father and my daughter: JA from his name, MY from hers. I’m the link between them. JAMY is the link between the COBOL an older generation wrote and the people changing it now.</blockquote>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>Contact us</h2>
+    <p class="point">Tell us about your COBOL. The first look is free: one hour, online, on one of your own programs.</p>
+    <form action="https://formsubmit.co/contact@usejamy.com" method="POST">
+      <input type="hidden" name="_subject" value="New message from usejamy.com">
+      <input type="hidden" name="_next" value="https://usejamy.com/thanks.html">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div><label for="f-name">Your name</label><input id="f-name" type="text" name="name" required autocomplete="name"></div>
+      <div><label for="f-email">Work email</label><input id="f-email" type="email" name="email" required autocomplete="email"></div>
+      <div><label for="f-company">Company</label><input id="f-company" type="text" name="company" autocomplete="organization"></div>
+      <div><label for="f-topic">I’m interested in</label>
+        <select id="f-topic" name="interested_in">
+          <option>A free first look</option>
+          <option>A pilot</option>
+          <option>Partnering (service firm)</option>
+          <option>Investing</option>
+          <option>Something else</option>
+        </select></div>
+      <div class="full"><label for="f-msg">Message</label><textarea id="f-msg" name="message" required></textarea></div>
+      <div class="full"><button type="submit">Send message</button></div>
+      <p class="small full">Please don’t paste source code or customer data here. Or email us at <a href="mailto:contact@usejamy.com">contact@usejamy.com</a>.</p>
+    </form>
   </div>
 </section>
 
