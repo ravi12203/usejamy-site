@@ -188,6 +188,11 @@ section.dark .lede { color: var(--mist); }
 .box.n { border-top: 6px solid #C9952E; }
 .aside { margin-top: 26px; background: var(--blue-bg); border-radius: 12px; padding: 18px 22px; color: var(--ink); }
 
+.covers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.covers .card { background: var(--white); border-radius: 12px; padding: 26px; border: 1px solid var(--line); border-top: 6px solid var(--ok); }
+.covers .yes { margin: 0 0 14px; width: 30px; height: 30px; display: block; }
+.covers .yes::after { left: 8px; top: 9px; width: 13px; height: 7px; }
+.covers p { margin: 0; color: var(--body); }
 /* security */
 .safe { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
 .safe .card { background: rgba(255, 255, 255, .07); border: 1px solid rgba(197, 211, 226, .28); border-radius: 12px; padding: 24px; }
@@ -254,6 +259,7 @@ footer p { margin: 0; flex-basis: 100%; }
   .band .it:nth-child(2) { border-right: 0; }
   .band .it:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
   .steps, .verdicts, .safe, .who, .start { grid-template-columns: 1fr; }
+  .covers { grid-template-columns: 1fr 1fr; }
   .diagram { display: none; }
   .nav .links { display: none; }
   .nav .btn { margin-left: auto; }
@@ -269,6 +275,7 @@ footer p { margin: 0; flex-basis: 100%; }
 }
 @media (max-width: 560px) {
   .band .in { grid-template-columns: 1fr; }
+  .covers { grid-template-columns: 1fr; }
   .band .it { border-right: 0; border-bottom: 1px solid var(--line); }
   .band .it:last-child { border-bottom: 0; }
   .listing pre { font-size: 12.5px; }
@@ -500,27 +507,13 @@ footer p { margin: 0; flex-basis: 100%; }
 <section class="tint" id="covers">
   <div class="wrap">
     <h2>What JAMY covers today</h2>
-    <p class="lede">We’d rather tell you now than have you find out in a pilot.</p>
-    <div class="cols">
-      <div class="box y">
-        <h3><span class="yes"></span>It checks</h3>
-        <ul>
-          <li>Batch programs</li>
-          <li>Sequential, print and indexed (VSAM KSDS) files</li>
-          <li>The common Db2 and CICS commands, through a small stand-in</li>
-          <li>Whole folders: programs, jobs and the files between them</li>
-        </ul>
-      </div>
-      <div class="box n">
-        <h3><span class="mid"></span>It doesn’t check yet</h3>
-        <ul>
-          <li>IMS</li>
-          <li>CICS and Db2 beyond that stand-in</li>
-        </ul>
-        <p class="more">JAMY still explains these programs. Changes to them are tested on your test system, as today. Anything it can’t run, it names with the line.</p>
-      </div>
+    <p class="lede">Built for batch COBOL: the programs and jobs that do the nightly work.</p>
+    <div class="covers">
+      <div class="card"><span class="yes"></span><h3>Batch programs</h3><p>The programs behind accounts, loans, claims and statements.</p></div>
+      <div class="card"><span class="yes"></span><h3>Your file types</h3><p>Sequential, print and indexed (VSAM KSDS) files.</p></div>
+      <div class="card"><span class="yes"></span><h3>Db2 and CICS</h3><p>The common commands, through a small stand-in on the PC.</p></div>
+      <div class="card"><span class="yes"></span><h3>Whole folders</h3><p>Programs, jobs and the files between them, mapped together.</p></div>
     </div>
-    <p class="aside"><b>About the compiler.</b> On the PC, JAMY runs programs with GnuCOBOL, not IBM’s compiler. For the cases that matter, it prepares a folder your team runs on your own test system, then compares that output byte for byte. Your compiler stays the last gate.</p>
   </div>
 </section>
 
@@ -571,7 +564,8 @@ footer p { margin: 0; flex-basis: 100%; }
       <details><summary>Does our code leave the building?</summary><p>No. JAMY has no network code. It runs on one Windows PC, and nothing is sent anywhere.</p></details>
       <details><summary>Does it use AI?</summary><p>No. JAMY reads the code and runs the programs. The same change gives the same answer every time.</p></details>
       <details><summary>Can it check a change that an AI tool wrote?</summary><p>Yes. JAMY doesn’t care who wrote the change. It runs the old and the new version and shows what came out different.</p></details>
-      <details><summary>Do we need mainframe time to use it?</summary><p>Not for everyday checks. They run on the PC. When you want a mainframe match, JAMY prepares a folder your team runs on your own test system and compares the result.</p></details>
+      <details><summary>Do we need mainframe time to use it?</summary><p>Not for everyday checks. They run on the PC with GnuCOBOL, a free COBOL compiler. When you want a mainframe match, JAMY prepares a folder your team runs on your own test system and compares the result byte for byte. Your own compiler stays the last gate.</p></details>
+      <details><summary>Is there anything JAMY doesn’t check yet?</summary><p>Yes. It doesn’t check IMS, or CICS and Db2 beyond the common commands. JAMY still explains those programs, and it always tells you what it couldn’t check and why.</p></details>
       <details><summary>What if a small supplier like you disappears?</summary><p>Nothing in JAMY depends on us. There’s no server and no licence server, and the evidence packs are plain files that open in any browser.</p></details>
       <details><summary>Does it replace our testing?</summary><p>No. It adds proof to it. Your experts stay in charge: they review evidence instead of reading code line by line.</p></details>
     </div>
